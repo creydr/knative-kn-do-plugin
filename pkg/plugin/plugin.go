@@ -28,7 +28,11 @@ func Run(message string) error {
 		Model: config.Model,
 	}
 
-	mappings := Mappings()
+	mappings, err := Mappings()
+	if err != nil {
+		return fmt.Errorf("could not setup k8s-function to llm-function mappings: %w", err)
+	}
+
 	for _, mapping := range mappings {
 		params.Tools = append(params.Tools, function.WrapIntoChatCompletionToolParam(mapping.FunctionDefinitionParam))
 	}
@@ -59,7 +63,7 @@ func Run(message string) error {
 			return fmt.Errorf("failed to extract function argument: %w", err)
 		}
 
-		if err := mapping.K8sFunc(args); err != nil {
+		if err := mapping.K8sHandler.Handle(ctx, args); err != nil {
 			return fmt.Errorf("failed to call mapping function for %s: %w", funcName, err)
 		}
 	}

@@ -1,3 +1,7 @@
 package k8s
 
-type Func func(Arguments) error
+import "context"
+
+type Handler interface {
+	Handle(context.Context, Arguments) error
+}
