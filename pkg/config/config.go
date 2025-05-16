@@ -17,7 +17,7 @@ const (
 func NewFromEnv() Config {
 	return Config{
 		BaseUrl: getEnvOrDefault(EnvKeyApiBaseUrl, "http://localhost:11434/v1"),
-		ApiKey:  getEnvOrDefault(EnvKeyApiKey, "foobar"),
+		ApiKey:  getEnvOrDefault(EnvKeyApiKey, ""),
 		Model:   getEnvOrDefault(EnvKeyModelName, "qwen3:1.7b"),
 	}
 }

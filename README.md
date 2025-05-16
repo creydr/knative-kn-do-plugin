@@ -19,11 +19,11 @@ go install github.com/creydr/knative-kn-do-plugin/cmd@latest
 
 As the plugin uses a LLM for natural language processing, it requires an API endpoint for a model (and maybe a API token) via the following environment variables:
 
-| env                         | description                                     | default                     |
-|-----------------------------|-------------------------------------------------|-----------------------------|
-| `KN_DO_OPENAI_API_ENDPOINT` | Endpoint of an OpenAI API compatible LLM server | `http://localhost:11434/v1` |
-| `KN_DO_OPENAI_API_ENDPOINT_KEY`   | API key for accessing the above API             | `foobar`                    |
-| `KN_DO_MODEL_NAME`                | Model name to use                               | `qwen3:1.7b`                |
+| env                             | description                                      | default                     |
+|---------------------------------|--------------------------------------------------|-----------------------------|
+| `KN_DO_OPENAI_API_ENDPOINT`     | Endpoint of an OpenAI API compatible LLM server  | `http://localhost:11434/v1` |
+| `KN_DO_OPENAI_API_ENDPOINT_KEY` | API key for accessing the above API              |                             |
+| `KN_DO_MODEL_NAME`              | Model name to use                                | `qwen3:1.7b`                |
 
 ### Server setup
 
