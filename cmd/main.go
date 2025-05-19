@@ -18,6 +18,7 @@ func main() {
 	}
 
 	if err := plugin.Run(message); err != nil {
-		panic(err)
+		fmt.Printf("Could not execute plugin, due to: %v\n", err)
+		os.Exit(1)
 	}
 }
