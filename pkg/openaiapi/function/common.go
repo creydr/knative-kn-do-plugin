@@ -1,6 +1,9 @@
 package function
 
-import "github.com/openai/openai-go"
+import (
+	"github.com/creydr/knative-kn-do-plugin/pkg/k8s"
+	"github.com/openai/openai-go"
+)
 
 type FunctionData struct {
 	Description string
@@ -18,7 +21,7 @@ func (funcData *FunctionData) ToFunctionDefinitionParam(funcName string) openai.
 type Parameters []Parameter
 
 type Parameter struct {
-	Name        string
+	Name        k8s.ArgumentName
 	Type        string
 	Description string
 	Required    bool
@@ -32,13 +35,13 @@ func (f Parameters) ToFunctionParameters() openai.FunctionParameters {
 	properties := map[string]interface{}{}
 	var required []string
 	for _, f := range f {
-		properties[f.Name] = map[string]string{
+		properties[string(f.Name)] = map[string]string{
 			"type":        f.Type,
 			"description": f.Description,
 		}
 
 		if f.Required {
-			required = append(required, f.Name)
+			required = append(required, string(f.Name))
 		}
 	}
 
