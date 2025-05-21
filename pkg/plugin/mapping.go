@@ -44,6 +44,7 @@ func Mappings() (ToolMappings, error) {
 	}
 
 	m.add("create_broker", function.CreateBroker(), k8s.NewCreateBrokerHandler(eventingClient))
+	m.add("create_trigger", function.CreateTrigger(), k8s.NewCreateTriggerHandler(eventingClient))
 	m.add("delete_kind", function.DeleteKind(), k8s.NewDeleteKindHandler(dynamicClient))
 
 	return m, nil
