@@ -18,7 +18,7 @@ type DeleteKindHandler struct {
 }
 
 func (kh DeleteKindHandler) Handle(ctx context.Context, args Arguments) error {
-	fmt.Printf("Deleting Kind %s with name %s in namespace %s\n", args.get(KindArgName, ""), args.get(KindNameArgName, ""), args.get(KindNamespaceArgName, "default"))
+	fmt.Printf("Deleting Kind %s with name %s\n", args.get(KindArgName), args.get(KindNameArgName))
 
 	return nil
 }
