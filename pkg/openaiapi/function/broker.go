@@ -17,6 +17,11 @@ func CreateBroker() *FunctionData {
 				Type:        "string",
 				Description: "The Kubernetes namespace where the Broker should be created in",
 			},
+			Parameter{
+				Name:        k8s.BrokerClassArgName,
+				Type:        "string",
+				Description: "The class or type of the Broker",
+			},
 		},
 	}
 }

@@ -12,3 +12,16 @@ func GetRestConfig() (*rest.Config, error) {
 		&clientcmd.ConfigOverrides{},
 	).ClientConfig()
 }
+
+func GetDefaultNamespace() string {
+	cfg, err := clientcmd.NewDefaultClientConfigLoadingRules().Load()
+	if err != nil {
+		panic("could not load default config: " + err.Error())
+	}
+
+	ns := cfg.Contexts[cfg.CurrentContext].Namespace
+	if ns == "" {
+		ns = "default"
+	}
+	return ns
+}
