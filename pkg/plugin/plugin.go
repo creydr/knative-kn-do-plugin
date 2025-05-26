@@ -4,7 +4,9 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"time"
 
+	"github.com/briandowns/spinner"
 	"github.com/creydr/knative-kn-do-plugin/pkg/config"
 	"github.com/creydr/knative-kn-do-plugin/pkg/k8s"
 	"github.com/creydr/knative-kn-do-plugin/pkg/openaiapi"
@@ -13,10 +15,10 @@ import (
 )
 
 func Run(message string) error {
+	ctx := context.Background()
+
 	config := config.NewFromEnv()
 	client := openaiapi.NewClient(config)
-
-	ctx := context.Background()
 
 	fmt.Printf("so you want to %s...\n", message)
 
@@ -37,11 +39,18 @@ func Run(message string) error {
 		params.Tools = append(params.Tools, function.WrapIntoChatCompletionToolParam(mapping.FunctionDefinitionParam))
 	}
 
+	chatCompletionSpinner := spinner.New(spinner.CharSets[11], 100*time.Millisecond)
+	chatCompletionSpinner.Suffix = " Trying to understand what you said...\n"
+	chatCompletionSpinner.FinalMSG = "I think I know what you want me to do...\n"
+	chatCompletionSpinner.Start()
+
 	// Make initial chat completion request
 	completion, err := client.Chat.Completions.New(ctx, params)
 	if err != nil {
+		chatCompletionSpinner.Start()
 		return fmt.Errorf("failed to execute API request: %w", err)
 	}
+	chatCompletionSpinner.Stop()
 
 	toolCalls := completion.Choices[0].Message.ToolCalls
 
